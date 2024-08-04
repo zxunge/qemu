@@ -113,7 +113,7 @@ static void slirp_smb_cleanup(SlirpState *s);
 static inline void slirp_smb_cleanup(SlirpState *s) { }
 #endif
 
-static ssize_t net_slirp_send_packet(const void *pkt, size_t pkt_len,
+static slirp_ssize_t net_slirp_send_packet(const void *pkt, size_t pkt_len,
                                      void *opaque)
 {
     SlirpState *s = opaque;
