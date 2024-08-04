@@ -376,7 +376,7 @@ static void net_slirp_poll_notify(Notifier *notifier, void *data)
     }
 }
 
-static ssize_t
+static SlirpReadCb
 net_slirp_stream_read(void *buf, size_t size, void *opaque)
 {
     QEMUFile *f = opaque;
@@ -384,7 +384,7 @@ net_slirp_stream_read(void *buf, size_t size, void *opaque)
     return qemu_get_buffer(f, buf, size);
 }
 
-static ssize_t
+static SlirpWriteCb
 net_slirp_stream_write(const void *buf, size_t size, void *opaque)
 {
     QEMUFile *f = opaque;
@@ -1032,7 +1032,7 @@ static void guestfwd_read(void *opaque, const uint8_t *buf, int size)
     slirp_socket_recv(fwd->slirp, fwd->server, fwd->port, buf, size);
 }
 
-static ssize_t guestfwd_write(const void *buf, size_t len, void *chr)
+static SlirpWriteCb guestfwd_write(const void *buf, size_t len, void *chr)
 {
     return qemu_chr_fe_write_all(chr, buf, len);
 }
