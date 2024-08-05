@@ -61,6 +61,8 @@ jobs:
           git submodule update --recursive
           ./configure --prefix=/opt/qemu --enable-sdl --disable-whpx --enable-gtk --bindir=bin -Dstrip=true
           make -j$(nproc) install
+          # We run checks
+          make check
           7zr a -mx9 -mqs=on -mmt=on /opt/QEMU.7z /opt/qemu/*
 
       - uses: actions/upload-artifact@v4
