@@ -1048,14 +1048,7 @@ static void guestfwd_read(void *opaque, const uint8_t *buf, int size)
 
 static slirp_ssize_t guestfwd_write(const void *buf, size_t len, void *chr)
 {
-    unsigned int ret = qemu_chr_fe_write_all(chr, buf, len);
-    if (ret <= INT_MAX)
-        return ret;
-    else
-    {
-        error_setg(&NULL, "unsigned is larger than INT_MAX in guestfwd_write.");
-        exit(EXIT_FAILURE);
-    }
+    return qemu_chr_fe_write_all(chr, buf, len);
 }
 
 static int slirp_guestfwd(SlirpState *s, const char *config_str, Error **errp)
