@@ -382,12 +382,13 @@ static slirp_ssize_t
 net_slirp_stream_read(void *buf, size_t size, void *opaque)
 {
     QEMUFile *f = opaque;
+    Error *e = NULL;
     unsigned int ret = qemu_get_buffer(f, buf, size);
     if (ret <= INT_MAX)
         return ret;
     else
     {
-        error_setg(&NULL, "unsigned is larger than INT_MAX in net_slirp_stream_read.");
+        error_setg(&e, "unsigned is larger than INT_MAX in net_slirp_stream_read.");
         exit(EXIT_FAILURE);
     }
 }
@@ -396,6 +397,7 @@ static slirp_ssize_t
 net_slirp_stream_write(const void *buf, size_t size, void *opaque)
 {
     QEMUFile *f = opaque;
+    Error *e = NULL;
 
     qemu_put_buffer(f, buf, size);
     if (qemu_file_get_error(f)) {
@@ -406,7 +408,7 @@ net_slirp_stream_write(const void *buf, size_t size, void *opaque)
         return size;
     else
     {
-        error_setg(&NULL, "unsigned is larger than INT_MAX in net_slirp_stream_write.");
+        error_setg(&e, "unsigned is larger than INT_MAX in net_slirp_stream_write.");
         exit(EXIT_FAILURE);
     }
 }
